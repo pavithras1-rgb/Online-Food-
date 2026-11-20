@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">FRESH · TASTY · DELIVERED</p>
+    <h1>Your cravings,<br><span>one click away.</span></h1>
+    <p class="hero-copy">Choose your favourites, add them to your cart and place your order in minutes.</p>
+    <a class="primary-link" href="#menu">Explore menu ↓</a>
+  </div>
+  <div class="hero-art" aria-label="Illustration of food">🍕<span>🍔</span><b>🥤</b></div>
+</section>
+
+<section id="menu" class="menu-section">
+  <div class="section-heading"><div><p class="eyebrow">MADE WITH LOVE</p><h2>Explore our menu</h2></div><p>Good food. Good mood.</p></div>
+  <div class="filters">
+    <button class="filter active" data-category="All">All items</button>
+    {% for category in categories %}<button class="filter" data-category="{{ category }}">{{ category }}</button>{% endfor %}
+  </div>
+  <div class="food-grid">
+    {% for food in foods %}
+    <article class="food-card" data-category="{{ food.category }}">
+      <div class="food-art">{{ food.emoji }}<span>{{ food.category }}</span></div>
+      <div class="food-info">
+        <div class="food-title"><h3>{{ food.name }}</h3><strong>₹{{ food.price }}</strong></div>
+        <p>{{ food.description }}</p>
+        <button class="add-button" data-id="{{ food.id }}" data-name="{{ food.name }}" data-price="{{ food.price }}">＋ Add to cart</button>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="cart-backdrop" id="cart-backdrop"></div>
+<aside class="cart-panel" id="cart-panel" aria-label="Shopping cart">
+  <div class="cart-heading"><div><p class="eyebrow">YOUR ORDER</p><h2>Shopping cart</h2></div><button class="close-cart" id="close-cart" type="button">×</button></div>
+  <div id="cart-items" class="cart-items"><p class="empty-cart">Your cart is empty. Add something tasty!</p></div>
+  <div class="cart-bottom">
+    <div class="total-row"><span>Total</span><strong id="cart-total">₹0</strong></div>
+    <form action="{{ url_for('checkout') }}" method="POST" id="checkout-form">
+      <input type="hidden" name="cart_data" id="cart-data">
+      <label>Your name<input name="customer_name" required minlength="2" placeholder="Enter your name"></label>
+      <label>Phone number<input name="phone" required inputmode="numeric" pattern="[0-9]{10,15}" placeholder="10–15 digits"></label>
+      <label>Delivery address<textarea name="address" required minlength="8" placeholder="House no., street, area..." rows="2"></textarea></label>
+      <button class="checkout-button" type="submit">Place order · Demo</button>
+    </form>
+    <p class="small-note">Payment is not collected in this student demo.</p>
+  </div>
+</aside>
+{% endblock %}

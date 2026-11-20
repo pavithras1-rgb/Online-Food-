@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Recent orders | QuickBite{% endblock %}
+{% block content %}
+<section class="orders-page">
+  <p class="eyebrow">ORDER HISTORY</p><h1>Recent orders</h1>
+  <p class="muted">Latest 20 demo orders stored in the local SQLite database.</p>
+  {% if orders %}
+    <div class="orders-list">
+    {% for order in orders %}
+      <article class="order-card">
+        <div class="order-top"><strong>Order #{{ order.id }} · {{ order.customer_name }}</strong><strong>₹{{ "%.2f"|format(order.total) }}</strong></div>
+        <p>{{ order.items }}</p><small>{{ order.created_at }}</small>
+      </article>
+    {% endfor %}
+    </div>
+  {% else %}<div class="empty-state">No orders yet. Place your first order from the menu!</div>{% endif %}
+  <a class="primary-link" href="{{ url_for('home') }}">Go to menu</a>
+</section>
+{% endblock %}

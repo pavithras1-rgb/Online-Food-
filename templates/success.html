@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Order confirmed | QuickBite{% endblock %}
+{% block content %}
+<section class="success-card">
+  <div class="success-icon">✓</div><p class="eyebrow">ORDER RECEIVED</p>
+  <h1>Thank you, {{ customer_name }}!</h1>
+  <p>Your demo order has been saved successfully.</p>
+  <div class="order-number">Order #{{ order_id }}</div>
+  <div class="receipt">
+    {% for line in order_lines %}<p>{{ line }}</p>{% endfor %}
+    <div class="total-row"><span>Total</span><strong>₹{{ total }}</strong></div>
+  </div>
+  <a class="primary-link" href="{{ url_for('home') }}">Back to menu</a>
+</section>
+{% endblock %}
